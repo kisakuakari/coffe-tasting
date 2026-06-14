@@ -106,18 +106,18 @@ coffee_contest/
 ## 6. 実装の順番（30分ごと）
 
 ### STEP 0: 準備（30分）
-- [ ] `coffee_contest` フォルダを作る
-- [ ] `pip install streamlit` する
-- [ ] `app.py` に「Hello」と表示し、`streamlit run app.py` で動かす
+- [x] `coffee_contest` フォルダを作る
+- [x] `pip install streamlit` する
+- [x] `app.py` に「Hello」と表示し、`streamlit run app.py` で動かす
 
 ### STEP 1: database.py の土台（30分）
-- [ ] `get_connection()` を書く
-- [ ] `init_db()` でテーブル5つを作る
-- [ ] `app.py` の最初で `init_db()` を1回呼ぶ → coffee.db ができるか確認
+- [x] `get_connection()` を書く
+- [x] `init_db()` でテーブル5つを作る
+- [x] `app.py` の最初で `init_db()` を1回呼ぶ → coffee.db ができるか確認
 
 ### STEP 2: ロースター申込（30分×2）
-- [ ] `database.py` に `add_roaster()` `add_coffee()` を書く
-- [ ] `next_coffee_number()` で番号付け（FR-01…）
+- [x] `database.py` に `add_roaster()` `add_coffee()` を書く
+- [ ] `ç` で番号付け（FR-01…）
 - [ ] `pages/1_ロースター申込.py` で入力欄を作り、送信で上の関数を呼ぶ
 
 ### STEP 3: 審査員申込（30分×2）
