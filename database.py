@@ -25,8 +25,9 @@ def init_db():
     cur.execute("""
         CREATE TABLE IF NOT EXISTS coffees (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            store TEXT,
-            coffe TEXT
+            roaster_id INTEGER,
+            category TEXT,
+            coffee_name TEXT
         )
     """)
 
@@ -77,17 +78,16 @@ def add_roaster(company_name, company_name_kana, contact_name,
     conn.close()
     return new_id
 
-def add_coffee(id, category, coffee):
+def add_coffee(roaster_id, category, coffee_name):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO roasters (company, email) VALUES (?, ?)",
-        (company, email)
+        "INSERT INTO coffees (roaster_id, category, coffee_name) VALUES (?, ?, ?)",
+        (roaster_id, category, coffee_name)
     )
     conn.commit()
     new_id = cur.lastrowid
     conn.close()
-    return new_id
     return "FR-01"
 
 def add_judge(*args, **kwargs):
