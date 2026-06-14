@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import streamlit as st
-from database import add_judge, check_judge_exists
+# from database import add_judge, check_judge_exists
 
 prefectures = [
     "未選択", "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県",
@@ -68,8 +68,7 @@ def main() -> None:
                 "workplace": workplace,
             }
         if is_valid == True:
-            add_judge(judge_data)
+            # add_judge(judge_data)
 
 if __name__ == "__main__":
     main()
-
