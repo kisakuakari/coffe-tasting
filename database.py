@@ -11,8 +11,14 @@ def init_db():
     cur.execute("""
         CREATE TABLE IF NOT EXISTS roasters (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            company TEXT,
-            email TEXT
+            company_name TEXT,
+            company_name_kana TEXT,
+            contact_name TEXT,
+            address TEXT,
+            phone TEXT,
+            email TEXT,
+            prefecture TEXT,
+            access_token TEXT
         )
     """)
 
@@ -52,7 +58,26 @@ def init_db():
     conn.close()
 
 
-def add_roaster(company, email):
+def add_roaster(company_name, company_name_kana, contact_name,
+                address, phone, email, prefecture, access_token):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        """
+        INSERT INTO roasters
+            (company_name, company_name_kana, contact_name,
+             address, phone, email, prefecture, access_token)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (company_name, company_name_kana, contact_name,
+         address, phone, email, prefecture, access_token)
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return new_id
+
+def add_coffee(id, category, coffee):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
@@ -63,8 +88,6 @@ def add_roaster(company, email):
     new_id = cur.lastrowid
     conn.close()
     return new_id
-
-def add_coffee(*args, **kwargs):
     return "FR-01"
 
 def add_judge(*args, **kwargs):
