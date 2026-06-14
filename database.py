@@ -26,8 +26,17 @@ def init_db():
         CREATE TABLE IF NOT EXISTS coffees (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             roaster_id INTEGER,
-            category TEXT,
-            coffee_name TEXT
+            category TEXT,           -- 部門の接頭辞 (FR, FL, NT, CH, SP, CT)
+            coffee_number TEXT,      -- 自動採番 (例 FR-01)
+            coffee_name TEXT,        -- コーヒー名
+            roast_level INTEGER,     -- 焙煎度
+            acidity INTEGER,         -- 酸味
+            body INTEGER,            -- ボディ
+            sweetness INTEGER,       -- 甘味
+            retail_price INTEGER,    -- 小売価格(税込)
+            annual_roast_kg REAL,    -- 年間焙煎量(kg換算)
+            roast_date TEXT,         -- 焙煎日
+            package_size TEXT        -- 販売パッケージサイズ
         )
     """)
 
@@ -83,14 +92,18 @@ def count_category_number(cur, prefix):
   (prefix,))
     return cur.fetchone()[0]
 
-def add_coffee(roaster_id, category, coffee_name):
+def add_coffee(roaster_id, category, coffee_name, roast_level, acidity, body, sweetness, retail_price, annual_roast_kg, roast_date, package_size):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO coffees (roaster_id, category, coffee_name) VALUES (?, ?, ?)",
-        (roaster_id, category, coffee_name)
+        "INSERT INTO coffees (roaster_id, category, coffee_name, roast_level, acidity, body, sweetness, retail_price, annual_roast_kg, roast_date, package_size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        (roaster_id, category, coffee_name, roast_level, acidity, body, sweetness, retail_price, annual_roast_kg, roast_date, package_size)
     )
     count = count_category_number(cur, category)
+    cur.execute(
+        "INSERT INTO coffees (coffee_number) VALUES (?)",
+        (f"{category}-{count}")
+    )
     conn.commit()
     conn.close()
     return f"{category}-{count}"
