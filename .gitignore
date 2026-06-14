@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+*.pyc
+coffee.db
+.DS_Store
