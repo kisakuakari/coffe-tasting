@@ -78,6 +78,11 @@ def add_roaster(company_name, company_name_kana, contact_name,
     conn.close()
     return new_id
 
+def count_category_number(cur, prefix):
+    cur.execute("SELECT COUNT(*) FROM coffees WHERE category = ?",
+  (prefix,))
+    return cur.fetchone()[0]
+
 def add_coffee(roaster_id, category, coffee_name):
     conn = get_connection()
     cur = conn.cursor()
@@ -85,13 +90,15 @@ def add_coffee(roaster_id, category, coffee_name):
         "INSERT INTO coffees (roaster_id, category, coffee_name) VALUES (?, ?, ?)",
         (roaster_id, category, coffee_name)
     )
+    count = count_category_number(cur, category)
     conn.commit()
-    new_id = cur.lastrowid
     conn.close()
-    return "FR-01"
+    return f"{category}-{count}"
 
 def add_judge(*args, **kwargs):
     return 1
 
 def save_score(*args, **kwargs):
     return None
+
+# def save_coffee_number(): # その人が何個コーヒーを審査するのかを保存する関数
