@@ -7,7 +7,7 @@ from scoring import calculate_total_score
 def main() -> None:
     appearance = [1, 2, 3]
     aroma = [1, 2, 3, 4, 5, 6, 7]
-    flavor = [1, 2、3, 4, 5, 6, 7, 8, 9, 10]
+    flavor = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     email = st.text_input('メールアドレスを入力してください')
     if get_judge_by_email(email):
         judge = get_judge_by_email(email)
