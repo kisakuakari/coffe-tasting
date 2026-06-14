@@ -1,9 +1,13 @@
 # database.py
 import sqlite3
 
+def get_connection():
+    return sqlite3.connect("coffee.db")
+
 def init_db():
-    conn = sqlite3.connect("coffee.db")
-    cur = conn.cursor()
+    conn = get_connection() # DBとの繋がり全体
+    cur = conn.cursor() # 実際に命令を出す係・結果を受け取る係
+    # roasters（ロースター）の表（テーブル）を作ってる。
     cur.execute("""
         CREATE TABLE IF NOT EXISTS roasters (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -11,12 +15,54 @@ def init_db():
             email TEXT
         )
     """)
-    # 同じように coffees / judges / assignments / scores も作る
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS coffees (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            store TEXT,
+            coffe TEXT
+        )
+    """)
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS judges (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT
+        )
+    """)
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS assignments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            company TEXT,
+            email TEXT
+        )
+    """)
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS scores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            company TEXT,
+            email TEXT
+        )
+    """)
+
     conn.commit()
     conn.close()
 
+
 def add_roaster(*args, **kwargs):
-    return 1
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO roasters (company, email) VALUES (?, ?)",
+        (company, email)
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return new_id
 
 def add_coffee(*args, **kwargs):
     return "FR-01"
