@@ -52,7 +52,7 @@ def init_db():
     conn.close()
 
 
-def add_roaster(*args, **kwargs):
+def add_roaster(company, email):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
